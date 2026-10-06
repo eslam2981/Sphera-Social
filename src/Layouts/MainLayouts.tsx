@@ -23,7 +23,7 @@ export default function MainLayouts() {
           {/* Pill tab on left edge */}
           <button
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-            className="lg:hidden fixed left-0 top-1/2 -translate-y-1/2 z-40 flex items-center justify-center w-5 h-12 bg-white dark:bg-slate-800 border border-l-0 border-slate-200 dark:border-slate-700 rounded-r-lg shadow-lg cursor-pointer transition-all duration-300 hover:w-7 group"
+            className={`lg:hidden fixed left-0 top-1/2 -translate-y-1/2 z-40 flex items-center justify-center w-5 h-12 bg-white/60 dark:bg-slate-800/60 backdrop-blur-md border border-l-0 border-slate-200/50 dark:border-slate-700/50 rounded-r-lg shadow-lg cursor-pointer transition-all duration-300 hover:w-7 hover:bg-white dark:hover:bg-slate-800 hover:border-slate-200 dark:hover:border-slate-700 opacity-60 hover:opacity-100 group ${isSidebarOpen ? "opacity-0 pointer-events-none" : ""}`}
             aria-label="Toggle sidebar"
           >
             <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
