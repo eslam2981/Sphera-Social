@@ -2,8 +2,6 @@ import { useState, useEffect } from "react";
 import { Users, Search, UserPlus, Check, Loader2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { getSuggestedFriends, followUser, unfollowUser } from "../../services/Profile.service";
-import Navbar from "../../components/Navbar/Navbar";
-import Sidebar from "../../components/Sidebar/Sidebar";
 
 export default function Friends() {
   const [friends, setFriends] = useState<any[]>([]);
