@@ -153,7 +153,7 @@ export default function UserProfile() {
       </div>
 
       {}
-      <div className="relative w-full h-48 md:h-64 lg:h-80 rounded-b-3xl overflow-hidden bg-slate-200 dark:bg-slate-800 shadow-sm">
+      <div className="relative w-full h-48 md:h-64 lg:h-80 rounded-none sm:rounded-b-3xl overflow-hidden bg-slate-200 dark:bg-slate-800 shadow-sm">
         {cover && cover !== 'undefined' && !cover.includes('default') ? (
           <img src={cover} alt="Cover" className="w-full h-full object-cover" />
         ) : (

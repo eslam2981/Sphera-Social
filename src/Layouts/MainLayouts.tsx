@@ -117,8 +117,8 @@ export default function MainLayouts() {
 
 
 
-      <div className="container mx-auto px-4 py-6 max-w-[1400px]">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <div className={`mx-auto max-w-[1400px] ${isFullWidthPage ? "px-0 sm:px-4 py-0 sm:py-6" : "container px-4 py-6"}`}>
+        <div className={`grid grid-cols-1 lg:grid-cols-12 ${isFullWidthPage ? "gap-0 sm:gap-6" : "gap-6"}`}>
           {}
           {!isFullWidthPage && (
             <div className="hidden lg:block lg:col-span-3">
