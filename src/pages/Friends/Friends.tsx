@@ -94,9 +94,14 @@ export default function Friends() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {isLoading ? (
-          <div className="col-span-full flex justify-center py-12">
-            <Loader2 className="animate-spin text-slate-400 w-8 h-8" />
-          </div>
+          Array(6).fill(0).map((_, i) => (
+            <div key={i} className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/60 dark:border-slate-700/60 p-5 flex flex-col items-center animate-pulse">
+              <div className="w-24 h-24 rounded-full bg-slate-200 dark:bg-slate-800 mb-3" />
+              <div className="h-5 w-32 bg-slate-200 dark:bg-slate-800 rounded-md mb-2" />
+              <div className="h-4 w-20 bg-slate-200 dark:bg-slate-800 rounded-md mb-4" />
+              <div className="w-full h-10 bg-slate-200 dark:bg-slate-800 rounded-xl" />
+            </div>
+          ))
         ) : filteredFriends.length > 0 ? (
           filteredFriends.map((friend) => (
             <div key={friend._id} className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/60 dark:border-slate-700/60 p-5 flex flex-col items-center text-center shadow-sm hover:shadow-md transition-shadow">
