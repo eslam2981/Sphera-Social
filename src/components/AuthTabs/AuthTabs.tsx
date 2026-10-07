@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 /** Renders the auth tabs component. */
 export default function AuthTabs() {
   return (
-    <div className="bg-[#F4F7FB] dark:bg-slate-800 p-1.5 rounded-2xl flex items-center mb-6 w-full max-w-lg mx-auto shadow-sm border border-gray-100 dark:border-slate-700">
+    <div className="bg-[#F4F7FB] dark:bg-slate-800 p-1.5 rounded-2xl flex items-center mb-6 w-full max-w-md mx-auto shadow-sm border border-gray-100 dark:border-slate-700">
       <NavLink 
         to="/auth/login"
         className={({ isActive }) => 

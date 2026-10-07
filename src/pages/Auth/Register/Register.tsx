@@ -89,7 +89,7 @@ export default function Register() {
 
   return (
     <>
-      <section className="bg-white dark:bg-slate-900 rounded-3xl shadow-xl p-5 md:p-6 max-w-lg w-full border border-gray-100 dark:border-slate-800 mx-auto animate-fade-in-up">
+      <section className="bg-transparent sm:bg-white dark:bg-slate-900 rounded-2xl sm:rounded-3xl border-0 sm:border shadow-none sm:shadow-xl p-5 md:p-6 max-w-md w-full w-full border border-gray-100 dark:border-slate-800 mx-auto animate-fade-in-up">
       {}
       <div className="lg:hidden text-center mb-6 flex flex-col items-center">
         <div className="flex items-center gap-2 mb-1">
