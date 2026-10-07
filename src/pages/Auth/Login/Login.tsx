@@ -69,7 +69,7 @@ export default function Login() {
 
   return (
     <>
-      <section className="bg-white dark:bg-slate-900 rounded-3xl shadow-xl p-6 md:p-8 max-w-lg w-full border border-gray-100 dark:border-slate-800 mx-auto animate-fade-in-up">
+      <section className="bg-white dark:bg-slate-900 rounded-3xl shadow-xl p-4 sm:p-6 md:p-8 max-w-lg w-full border border-gray-100 dark:border-slate-800 mx-auto animate-fade-in-up">
         {}
         <div className="lg:hidden text-center mb-6 flex flex-col items-center">
           <div className="flex items-center gap-2 mb-1">
