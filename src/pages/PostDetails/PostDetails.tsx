@@ -5,14 +5,9 @@ import PostCard from "../Newsfeed/components/PostCard";
 import PostCardSkeleton from "../Newsfeed/components/PostCardSkeleton";
 import { ArrowLeft, AlertCircle, LogIn } from "lucide-react";
 import { formatTimeAgo } from "../../utils/dateUtils";
-
-/** Renders the post details component. */
 export default function PostDetails() {
-  /** Renders the { id } component. */
     const { id } = useParams();
   const navigate = useNavigate();
-
-  /** Renders the { data: post, is loading, is error, error } component. */
     const { data: post, isLoading, isError, error } = useQuery({
     queryKey: ["post", id],
     queryFn: async () => {

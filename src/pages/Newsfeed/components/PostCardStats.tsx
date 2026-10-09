@@ -1,7 +1,5 @@
 import { ThumbsUp } from "lucide-react";
 import type { PostCardStatsProps } from '../../../types';
-
-/** Renders the post card stats component. */
 export default function PostCardStats({ likesCount, commentsCount, sharesCount }: PostCardStatsProps) {
   if (likesCount === 0 && commentsCount === 0 && sharesCount === 0) {
     return null; 

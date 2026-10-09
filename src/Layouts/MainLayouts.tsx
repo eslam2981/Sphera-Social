@@ -5,8 +5,6 @@ import { UserDataContext } from "../contexts/UserData";
 import Navbar from "../components/Navbar/Navbar";
 import Sidebar from "../components/Sidebar/Sidebar";
 import RightSidebar from "../components/RightSidebar/RightSidebar";
-
-/** Renders the main layouts component. */
 export default function MainLayouts() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const { Data, saveUserData } = useContext(UserDataContext) as any;
@@ -100,6 +98,7 @@ export default function MainLayouts() {
                 <div className="px-3 pb-4 pt-2 border-t border-slate-100 dark:border-slate-800 shrink-0">
                   <button
                     onClick={() => {
+                      // Logout user and clear tokens
                       setIsSidebarOpen(false);
                       saveUserData(null);
                       localStorage.removeItem('user_token');

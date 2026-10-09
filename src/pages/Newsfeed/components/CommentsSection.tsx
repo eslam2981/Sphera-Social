@@ -4,8 +4,6 @@ import CommentItem from "./CommentItem";
 import { UserDataContext } from "../../../contexts/UserData";
 import type { Comment } from "../../../types";
 import type { CommentsSectionProps } from '../../../types';
-
-/** Renders the comments section component. */
 export default function CommentsSection({
   isCommentsOpen,
   isLoadingComments,

@@ -3,8 +3,6 @@ import { createPortal } from "react-dom";
 import { User, MoreHorizontal, Edit2, Trash2, X, Loader2 } from "lucide-react";
 import { formatTimeAgo } from "../../../utils/dateUtils";
 import type { CommentItemProps } from '../../../types';
-
-/** Renders the comment item component. */
 export default function CommentItem({ comment, currentUserId, onDelete, onEdit, onLike }: CommentItemProps) {
     const [isOptionsOpen, setIsOptionsOpen] = useState(false);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -26,8 +24,6 @@ export default function CommentItem({ comment, currentUserId, onDelete, onEdit, 
       editInputRef.current.style.height = editInputRef.current.scrollHeight + 'px';
     }
   }, [isEditing]);
-
-  /** Handles the edit confirm action. */
     const handleEditConfirm = async () => {
     if (!editContent.trim() || editContent === comment.content) {
       setIsEditing(false);
@@ -44,8 +40,6 @@ export default function CommentItem({ comment, currentUserId, onDelete, onEdit, 
       setIsSubmittingEdit(false);
     }
   };
-
-  /** Handles the key down action. */
     const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
@@ -55,8 +49,6 @@ export default function CommentItem({ comment, currentUserId, onDelete, onEdit, 
       setEditContent(comment.content);
     }
   };
-
-  /** Handles the confirm delete action. */
     const handleConfirmDelete = async () => {
     setIsDeleting(true);
     try {
@@ -71,7 +63,6 @@ export default function CommentItem({ comment, currentUserId, onDelete, onEdit, 
   const isAuthor = String(currentUserId) === String(commentUser?._id);
 
   useEffect(() => {
-    /** Handles the click outside action. */
       function handleClickOutside(event: MouseEvent) {
       if (
         optionsRef.current && 

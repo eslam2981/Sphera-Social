@@ -1,9 +1,6 @@
 import axios from "axios";
 
 const base = import.meta.env.VITE_BASE_URL;
-
-
-/** Fetches posts data. */
 export async function getPosts(token:string|null, limit = 40, page = 1) {
     const { data } = await axios.get(`${base}/posts?limit=${limit}&page=${page}`, {
         headers: {
@@ -18,9 +15,6 @@ export async function getPosts(token:string|null, limit = 40, page = 1) {
         message: data.message 
     };   
 }
-
-
-/** Fetches user profile data. */
 export async function getUserProfile(token: string | null) {
     const { data } = await axios.get(`${base}/users/profile-data`, {
         headers: {
@@ -34,9 +28,6 @@ export async function getUserProfile(token: string | null) {
         message: data.message 
     };   
 }
-
-
-/** Fetches user profile by id data. */
 export async function getUserProfileById(token: string | null, userId: string) {
     const { data } = await axios.get(`${base}/users/${userId}/profile`, {
         headers: {
@@ -50,9 +41,6 @@ export async function getUserProfileById(token: string | null, userId: string) {
         message: data.message 
     };   
 }
-
-
-/** Fetches user posts data. */
 export async function getUserPosts(token: string | null, userId: string, limit = 40, page = 1) {
     const { data } = await axios.get(`${base}/users/${userId}/posts?limit=${limit}&page=${page}`, {
         headers: {
@@ -67,9 +55,6 @@ export async function getUserPosts(token: string | null, userId: string, limit =
         message: data.message 
     };   
 }
-
-
-/** Fetches post comments data. */
 export async function getPostComments(token: string | null, postId: string, limit = 10, page = 1) {
     const { data } = await axios.get(`${base}/posts/${postId}/comments?limit=${limit}&page=${page}`, {
         headers: {
@@ -84,9 +69,6 @@ export async function getPostComments(token: string | null, postId: string, limi
         message: data.message 
     };   
 }
-
-
-/** Executes the create post comment API request. */
 export async function createPostComment(token: string | null, postId: string, dataToSend: string | FormData) {
     const payload = typeof dataToSend === 'string' ? { content: dataToSend } : dataToSend;
     const { data } = await axios.post(`${base}/posts/${postId}/comments`, 
@@ -104,9 +86,6 @@ export async function createPostComment(token: string | null, postId: string, da
         message: data.message 
     };   
 }
-
-
-/** Executes the update post comment API request. */
 export async function updatePostComment(token: string | null, postId: string, commentId: string, content: string) {
     const { data } = await axios.put(`${base}/posts/${postId}/comments/${commentId}`, 
         { content },
@@ -123,9 +102,6 @@ export async function updatePostComment(token: string | null, postId: string, co
         message: data.message 
     };   
 }
-
-
-/** Executes the delete post comment API request. */
 export async function deletePostComment(token: string | null, postId: string, commentId: string) {
     const { data } = await axios.delete(`${base}/posts/${postId}/comments/${commentId}`, 
         {
@@ -140,9 +116,6 @@ export async function deletePostComment(token: string | null, postId: string, co
         message: data.message 
     };   
 }
-
-
-/** Executes the create post API request. */
 export async function createPost(token: string | null, formData: FormData) {
     const { data } = await axios.post(`${base}/posts`, 
         formData,
@@ -159,9 +132,6 @@ export async function createPost(token: string | null, formData: FormData) {
         message: data.message 
     };   
 }
-
-
-/** Executes the delete post API request. */
 export async function deletePost(token: string | null, postId: string) {
     const { data } = await axios.delete(`${base}/posts/${postId}`, 
         {
@@ -176,10 +146,6 @@ export async function deletePost(token: string | null, postId: string) {
         message: data.message 
     };   
 }
-
-
-
-/** Executes the like post comment API request. */
 export async function likePostComment(token: string | null, postId: string, commentId: string) {
     const { data } = await axios.put(`${base}/posts/${postId}/comments/${commentId}/like`, 
         {},
@@ -195,9 +161,6 @@ export async function likePostComment(token: string | null, postId: string, comm
         message: data.message 
     };   
 }
-
-
-/** Executes the like post API request. */
 export async function likePost(token: string | null, postId: string) {
     const { data } = await axios.put(`${base}/posts/${postId}/like`, 
         {},
@@ -213,9 +176,6 @@ export async function likePost(token: string | null, postId: string) {
         message: data.message 
     };   
 }
-
-
-/** Executes the share post API request. */
 export async function sharePost(token: string | null, postId: string, body: string = "") {
     const { data } = await axios.post(`${base}/posts/${postId}/share`, 
         { body },
@@ -232,9 +192,6 @@ export async function sharePost(token: string | null, postId: string, body: stri
         message: data.message 
     };   
 }
-
-
-/** Fetches notifications data. */
 export async function getNotifications(token: string | null, unread: boolean = false, page: number = 1, limit: number = 10) {
     const { data } = await axios.get(`${base}/notifications?unread=${unread}&page=${page}&limit=${limit}`, {
         headers: {
@@ -247,9 +204,6 @@ export async function getNotifications(token: string | null, unread: boolean = f
         data: data.notifications || data.data || data
     };
 }
-
-
-/** Fetches single post data. */
 export async function getSinglePost(userToken: string | null, postId: string) {
     const { data } = await axios.request({
         url: `${base}/posts/${postId}`,
@@ -260,9 +214,6 @@ export async function getSinglePost(userToken: string | null, postId: string) {
     });
     return data;
 }
-
-
-/** Executes the update post API request. */
 export async function updatePost(token: string | null, postId: string, formData: FormData) {
     const { data } = await axios.put(`${base}/posts/${postId}`, 
         formData,
@@ -279,9 +230,6 @@ export async function updatePost(token: string | null, postId: string, formData:
         message: data.message 
     };   
 }
-
-
-/** Executes the upload profile photo API request. */
 export async function uploadProfilePhoto(token: string | null, formData: FormData) {
     const { data } = await axios.put(`${base}/users/profile-picture`, 
         formData,
@@ -298,9 +246,6 @@ export async function uploadProfilePhoto(token: string | null, formData: FormDat
         message: data.message 
     };   
 }
-
-
-/** Executes the follow user API request. */
 export async function followUser(token: string | null, userId: string) {
     const { data } = await axios.put(`${base}/users/${userId}/follow`, 
         {},
@@ -316,9 +261,6 @@ export async function followUser(token: string | null, userId: string) {
         message: data.message 
     };   
 }
-
-
-/** Executes the unfollow user API request. */
 export async function unfollowUser(token: string | null, userId: string) {
     const { data } = await axios.delete(`${base}/users/${userId}/unfollow`, 
         {
@@ -333,9 +275,6 @@ export async function unfollowUser(token: string | null, userId: string) {
         message: data.message 
     };   
 }
-
-
-/** Fetches suggested friends. */
 export async function getSuggestedFriends(token: string | null, limit: number = 5) {
     if (!token) return { success: false, data: [] };
     try {

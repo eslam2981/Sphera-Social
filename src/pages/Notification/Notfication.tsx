@@ -4,8 +4,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getNotifications } from "../../services/Profile.service";
 import { formatTimeAgo } from "../../utils/dateUtils";
-
-/** Renders the notfication component. */
 export default function Notfication() {
     const [activeTab, setActiveTab] = useState<"all" | "unread">("all");
     const [openDropdownId, setOpenDropdownId] = useState<string | null>(null);
@@ -15,13 +13,10 @@ export default function Notfication() {
 
   
   useEffect(() => {
-    /** Handles the click outside action. */
       const handleClickOutside = () => setOpenDropdownId(null);
     document.addEventListener("click", handleClickOutside);
     return () => document.removeEventListener("click", handleClickOutside);
   }, []);
-
-  /** Renders the { data = {}, is loading, is error } component. */
     const { data = {}, isLoading, isError } = useQuery({
     queryKey: ['notifications'],
     queryFn: () => getNotifications(token, false, 1, 50),
@@ -35,8 +30,6 @@ export default function Notfication() {
   const displayNotifications = notificationsArray.filter((n: any) => 
     activeTab === "all" || (n.isRead !== true && n.unread !== false)
   );
-
-  /** Manages mark all as read logic. */
     const markAllAsRead = () => {
     
     queryClient.setQueryData(['notifications'], (oldData: any[]) => {
@@ -44,8 +37,6 @@ export default function Notfication() {
       return oldData.map(n => ({ ...n, isRead: true, unread: false }));
     });
   };
-
-  /** Manages mark as read logic. */
     const markAsRead = (id: string) => {
     
     queryClient.setQueryData(['notifications'], (oldData: any[]) => {
@@ -55,8 +46,6 @@ export default function Notfication() {
       );
     });
   };
-
-  /** Manages slice name logic. */
     const sliceName = (username: string | undefined) => {
     if (!username) return "U";
     const parts = username.trim().split(" ");
@@ -65,8 +54,6 @@ export default function Notfication() {
     }
     return username.substring(0, 2).toUpperCase();
   };
-
-  /** Fetches icon data. */
     const getIcon = (type: string) => {
     if (type?.includes("like")) return <Heart size={14} className="text-white fill-current" />;
     if (type?.includes("comment")) return <MessageCircle size={14} className="text-white fill-current" />;
@@ -74,8 +61,6 @@ export default function Notfication() {
     if (type?.includes("follow")) return <UserPlus size={14} className="text-white" />;
     return <Bell size={14} className="text-white" />;
   };
-
-  /** Fetches icon bg data. */
     const getIconBg = (type: string) => {
     if (type?.includes("like")) return "bg-red-500";
     if (type?.includes("comment")) return "bg-emerald-500";

@@ -12,10 +12,7 @@ import PostCardStats from "./PostCardStats";
 import PostCardActions from "./PostCardActions";
 import { ErrorMessage } from "../../../components/Alerts/ErrorMessage";
 import type { PostCardProps } from '../../../types';
-
-/** Renders the post card component. */
 function PostCard({ postId, authorId, authorName, authorPhoto, timeAgo, content, imageUrl, likes, likesArray, comments, topComment, shares, onPostDeleted, onPostShared, isShare, reposterId, reposterName, reposterPhoto, reposterTimeAgo, reposterContent, priority }: PostCardProps) {
-  /** Renders the {  data } component. */
     const { Data } = useContext(UserDataContext);
     const [liked, setLiked] = useState(() => {
     if (Data && Data._id && likesArray) {
@@ -63,13 +60,13 @@ function PostCard({ postId, authorId, authorName, authorPhoto, timeAgo, content,
   
   // Custom Error state
     const [errorMsg, setErrorMsg] = useState("");
-  /** Manages show error logic. */
+  // Show an error message briefly
     const showError = (msg: string) => {
     setErrorMsg(msg);
     setTimeout(() => setErrorMsg(""), 3000);
   };
-
-  /** Handles the like click action. */
+  
+  // Toggle post like status
     const handleLikeClick = async () => {
     const newLiked = !liked;
     setLiked(newLiked);
@@ -93,13 +90,12 @@ function PostCard({ postId, authorId, authorName, authorPhoto, timeAgo, content,
     }
   };
 
-  /** Handles the share click action. */
+  // Open share modal
     const handleShareClick = () => {
     setIsShareModalOpen(true);
     setShareText("");
   };
-
-  /** Handles the share confirm action. */
+  // Confirm share post action
     const handleShareConfirm = async () => {
     if (isSharing) return;
     
@@ -144,16 +140,14 @@ function PostCard({ postId, authorId, authorName, authorPhoto, timeAgo, content,
       setIsSharing(false);
     }
   };
-
-  /** Handles the edit post open action. */
+  // Open edit post modal
     const handleEditPostOpen = () => {
     setEditContent(localContent);
     setEditImagePreview(imageUrl || null);
     setEditImage(null);
     setIsEditModalOpen(true);
   };
-
-  /** Handles the edit post confirm action. */
+  // Submit post edit changes
     const handleEditPostConfirm = async () => {
     if (isUpdatingPost) return;
     setIsUpdatingPost(true);
@@ -176,8 +170,7 @@ function PostCard({ postId, authorId, authorName, authorPhoto, timeAgo, content,
       setIsUpdatingPost(false);
     }
   };
-
-  /** Handles the delete post confirm action. */
+  // Delete post
     const handleDeletePostConfirm = async () => {
     setIsDeletingPost(true);
     try {
@@ -195,8 +188,7 @@ function PostCard({ postId, authorId, authorName, authorPhoto, timeAgo, content,
       setIsDeleteModalOpen(false);
     }
   };
-
-  /** Handles the toggle comments action. */
+  // Open or close comments section
     const handleToggleComments = async () => {
     setIsCommentsOpen(!isCommentsOpen);
     
@@ -217,8 +209,7 @@ function PostCard({ postId, authorId, authorName, authorPhoto, timeAgo, content,
       }
     }
   };
-
-  /** Handles the add comment action. */
+  // Add a new comment to post
     const handleAddComment = async () => {
     if ((!newCommentText.trim() && !commentImage) || isSubmittingComment) return;
     
@@ -259,8 +250,7 @@ function PostCard({ postId, authorId, authorName, authorPhoto, timeAgo, content,
       setIsSubmittingComment(false);
     }
   };
-
-  /** Handles the delete comment action. */
+  // Delete a specific comment
     const handleDeleteComment = async (commentId: string) => {
     try {
       const token = localStorage.getItem("user_token");
@@ -276,8 +266,6 @@ function PostCard({ postId, authorId, authorName, authorPhoto, timeAgo, content,
       showError(error.response?.data?.message || error.response?.data?.error || "An error occurred while deleting the comment");
     }
   };
-
-  /** Handles the edit comment action. */
     const handleEditComment = async (commentId: string, newContent: string) => {
     try {
       const token = localStorage.getItem("user_token");
@@ -292,8 +280,6 @@ function PostCard({ postId, authorId, authorName, authorPhoto, timeAgo, content,
       showError(error.response?.data?.message || error.response?.data?.error || "An error occurred while editing the comment");
     }
   };
-
-  /** Handles the like comment action. */
     const handleLikeComment = async (commentId: string) => {
     try {
       const token = localStorage.getItem("user_token");

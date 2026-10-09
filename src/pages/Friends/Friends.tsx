@@ -120,7 +120,7 @@ export default function Friends() {
               <button 
                 onClick={() => handleFollowToggle(friend._id, friend.isFollowingLocal)}
                 disabled={processingId === friend._id}
-                className={`w-full py-2.5 rounded-xl font-semibold text-sm transition-colors flex items-center justify-center gap-2 ${
+                className={`w-full py-2.5 rounded-xl font-semibold text-sm transition-colors flex items-center justify-center gap-2 cursor-pointer disabled:cursor-not-allowed ${
                   friend.isFollowingLocal 
                     ? 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
                     : 'bg-blue-600 text-white hover:bg-blue-700 shadow-sm shadow-blue-600/20'

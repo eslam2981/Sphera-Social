@@ -6,20 +6,15 @@ import { useContext } from "react";
 import { UserDataContext } from "../../contexts/UserData.js";
 import { getNotifications } from "../../services/Profile.service";
 import { useQuery } from "@tanstack/react-query";
-
-/** Renders the navbar component. */
 export default function Navbar({ onSidebarToggle: _ }: { onSidebarToggle?: () => void }) {
     const [imgError, setImgError] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const location = useLocation();
   const navRef = useRef<HTMLElement>(null);
   const profileRef = useRef<HTMLDivElement>(null);
-  /** Renders the {  data } component. */
     const { Data } = useContext(UserDataContext);
-  /** Renders the {name, email, photo} component. */
     const {name, email, photo} = Data || {};
   const token = localStorage.getItem("user_token");
-  /** Renders the { data: notifications data } component. */
     const { data: notificationsData } = useQuery({
     queryKey: ['notifications'],
     queryFn: () => getNotifications(token, false, 1, 50),
@@ -46,15 +41,10 @@ export default function Navbar({ onSidebarToggle: _ }: { onSidebarToggle?: () =>
   ];
 
   const navigate = useNavigate();
-
-  /** Manages handel logout logic. */
     function handelLogout() {
     localStorage.removeItem("user_token");
     navigate("/auth/login");
   }
-
-
-  /** Manages slice name logic. */
     function sliceName(username: string | undefined) {
     if (!username) return "U";
     const parts = username.trim().split(" ");

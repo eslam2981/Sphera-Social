@@ -21,25 +21,30 @@
 ## 🛠️ Tech Stack
 
 **Frontend Framework & Build Tool:**
+
 - [React 19](https://react.dev/)
 - [Vite](https://vitejs.dev/)
 - [TypeScript](https://www.typescriptlang.org/)
 
 **Styling & UI Components:**
+
 - [Tailwind CSS v4](https://tailwindcss.com/)
 - [HeroUI](https://heroui.com/)
 - [Framer Motion](https://www.framer.com/motion/) (Animations)
 - [Lucide React](https://lucide.dev/) (Icons)
 
 **State Management & Data Fetching:**
+
 - [TanStack Query (React Query)](https://tanstack.com/query/latest)
 - [Axios](https://axios-http.com/)
 
 **Form Handling & Validation:**
+
 - [React Hook Form](https://react-hook-form.com/)
 - [Zod](https://zod.dev/)
 
 **Routing:**
+
 - [React Router DOM v7](https://reactrouter.com/)
 
 ---
@@ -47,9 +52,11 @@
 ## 🚀 Quick Start
 
 ### 1. Prerequisites
+
 Ensure you have **Node.js** (v18+) and **npm** (or pnpm/yarn) installed.
 
 ### 2. Clone and Install
+
 ```bash
 git clone https://github.com/yourusername/sphera-social.git
 cd sphera-social
@@ -57,15 +64,19 @@ npm install
 ```
 
 ### 3. Setup Environment Variables
+
 Create a `.env` file in the root directory and configure your backend API endpoint:
+
 ```env
-VITE_BASE_URL=https://linked-posts.routemisr.com
+VITE_BASE_URL=<YOUR_API_BASE_URL>
 ```
 
 ### 4. Run the Development Server
+
 ```bash
 npm run dev
 ```
+
 Navigate to `http://localhost:5173` in your browser.
 
 ---
@@ -86,19 +97,6 @@ src/
 
 ---
 
-## ☁️ Deployment (Vercel)
+## © Copyright
 
-The project is pre-configured for seamless deployment on [Vercel](https://vercel.com).
-The included `vercel.json` ensures that Single Page Application (SPA) routing functions correctly in production by rewriting all incoming requests to `index.html`.
-
-1. Push your code to a GitHub repository.
-2. Go to Vercel, click **Add New Project**, and import your repository.
-3. Vercel will auto-detect the **Vite** configuration.
-4. Add your Environment Variables (`VITE_BASE_URL`).
-5. Click **Deploy**.
-
----
-
-## 📄 License
-
-This project is open-source and available under the [MIT License](LICENSE).
+© 2026 Eslam Gamil. All Rights Reserved.

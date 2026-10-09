@@ -1,7 +1,5 @@
 import { Outlet } from "react-router-dom"
 import AuthIntro from "../components/Auth-Intro/AuthIntro"
-
-/** Renders the auth layout component. */
 export default function AuthLayout() {
   return (
     <main className="bg-sec dark:bg-slate-950 min-h-screen flex items-center justify-center py-4 px-2 sm:px-4 overflow-x-hidden">

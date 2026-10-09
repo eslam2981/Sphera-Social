@@ -5,18 +5,12 @@ import { uploadProfilePhoto, getUserProfile, getUserPosts } from "../../services
 import PostCard from "../Newsfeed/components/PostCard";
 import type { Post } from "../../types";
 import { formatTimeAgo } from "../../utils/dateUtils";
-
-/** Renders the profile component. */
 export default function Profile() {
-  /** Renders the {  data, save user data } component. */
     const { Data, saveUserData } = useContext(UserDataContext);
     const [userPosts, setUserPosts] = useState<Post[]>([]);
     const [isLoading, setIsLoading] = useState(true);
-  
-  /** Renders the { name, email, username, cover, created at, followers count, following count, gender, date of birth } component. */
     const { name, email, username, cover, createdAt, followersCount, followingCount, gender, dateOfBirth } = Data || {};
-  
-  /** Manages format date logic. */
+    // Format date to a readable string
     const formatDate = (dateString: string | undefined) => {
     if (!dateString) return "";
     return new Date(dateString).toLocaleDateString('en-GB', {
@@ -31,7 +25,7 @@ export default function Profile() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    /** Fetches profile data data. */
+      // Fetch the current user profile and posts
       const fetchProfileData = async () => {
       try {
         setIsLoading(true);
@@ -61,8 +55,7 @@ export default function Profile() {
       fetchProfileData();
     }
   }, [Data?._id]);
-
-  /** Handles the image change action. */
+    // Handle profile photo upload
     const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;

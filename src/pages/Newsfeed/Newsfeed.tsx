@@ -10,8 +10,6 @@ import type { Post } from "../../types";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useContext } from "react";
 import { UserDataContext } from "../../contexts/UserData";
-
-/** Renders the newsfeed component. */
 export default function Newsfeed() {
   const location = useLocation();
   const { Data } = useContext(UserDataContext);
@@ -23,16 +21,7 @@ export default function Newsfeed() {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
-  /**
-     * Renders the {
-     *     data,
-     *     fetch next page,
-     *     has next page,
-     *     status,
-     *     error,
-     *     refetch
-     *   } component.
-     */
+  // Fetch posts using Infinite Query based on active feed type
   const {
     data,
     fetchNextPage,
@@ -75,9 +64,8 @@ export default function Newsfeed() {
   });
 
   const postsData = data?.pages.flatMap(page => page.data) || [];
-
   
-  /** Handles the post created action. */
+    // Update the local cache when a new post is created
     const handlePostCreated = (newPost: Post) => {
     queryClient.setQueryData(['posts'], (oldData: any) => {
       if (!oldData) return oldData;
@@ -91,8 +79,7 @@ export default function Newsfeed() {
       return { ...oldData, pages: newPages };
     });
   };
-
-  /** Handles the post deleted action. */
+    // Update the local cache when a post is deleted
     const handlePostDeleted = (deletedPostId: string, isShare: boolean, sharedPostId?: string) => {
     queryClient.setQueryData(['posts'], (oldData: any) => {
       if (!oldData) return oldData;
@@ -110,8 +97,7 @@ export default function Newsfeed() {
       };
     });
   };
-
-  /** Handles the post shared action. */
+    // Update the local cache when a post is shared
     const handlePostShared = (sharedPost: Post, originalPostId: string, isShare: boolean, sourceSharedPostId?: string) => {
     queryClient.setQueryData(['posts'], (oldData: any) => {
       if (!oldData) return oldData;

@@ -1,7 +1,5 @@
 import { useState } from "react";
 import type { PostCardContentProps } from '../../../types';
-
-/** Renders the post card content component. */
 export default function PostCardContent({ content, imageUrl, priority }: PostCardContentProps & { priority?: boolean }) {
     const [postImgError, setPostImgError] = useState(false);
 

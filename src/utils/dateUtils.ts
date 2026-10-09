@@ -1,4 +1,3 @@
-/** Manages format time ago logic. */
 export function formatTimeAgo(dateString: string) {
   const date = new Date(dateString);
   const now = new Date();

@@ -20,9 +20,6 @@ const loginQuery = {
         "Content-Type":"application/json"
     }
 };
-
-
-/** Executes the create new user API request. */
 export async function createNewUser(body: SignupData) {
     try {
         const { data: { message } } = await axios.request({
@@ -41,9 +38,6 @@ export async function createNewUser(body: SignupData) {
         }
     }
 }
-
-
-/** Executes the login user API request. */
 export async function loginUser(body: LoginData) {
     try {
         const { data: { data, message } } = await axios.request({
@@ -71,8 +65,6 @@ const changePasswordQuery = {
         "Content-Type":"application/json"
     }
 };
-
-/** Executes the change password API request. */
 export async function changePassword(body: ChangePasswordData) {
     try {
         const token = localStorage.getItem("user_token");

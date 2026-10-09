@@ -2,8 +2,6 @@ import { useState, useRef, useEffect } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { User, Globe, MoreHorizontal, Bookmark, Edit2, Trash2, Repeat2, Lock } from "lucide-react";
 import type { PostCardHeaderProps } from '../../../types';
-
-/** Renders the post card header component. */
 export default function PostCardHeader({
   postId,
   authorId,
@@ -53,7 +51,6 @@ export default function PostCardHeader({
   */
 
   useEffect(() => {
-    /** Handles the click outside action. */
       function handleClickOutside(event: MouseEvent) {
       if (optionsRef.current && !optionsRef.current.contains(event.target as Node)) {
         setIsOptionsOpen(false);

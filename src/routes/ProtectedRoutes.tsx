@@ -1,6 +1,4 @@
 import { Navigate, Outlet } from 'react-router-dom';
-
-/** Manages protected routes logic. */
 export default function ProtectedRoutes() {
   const token = localStorage.getItem("user_token");
   

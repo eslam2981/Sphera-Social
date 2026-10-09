@@ -1,8 +1,6 @@
 import { AlertCircle } from "lucide-react";
 import { createPortal } from "react-dom";
 import type { ErrorMessageProps } from '../../types';
-
-/** Renders the error message component. */
 export function ErrorMessage({ message }: ErrorMessageProps) {
   if (!message) return null;
     

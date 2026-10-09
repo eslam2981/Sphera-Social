@@ -1,8 +1,6 @@
 import { CheckCircle2 } from "lucide-react";
 import { createPortal } from "react-dom";
 import type { SuccessMessageProps } from '../../types';
-
-/** Renders the success message component. */
 export function SuccessMessage({ message }: SuccessMessageProps) {
   if (!message) return null;
   

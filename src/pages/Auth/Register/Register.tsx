@@ -29,16 +29,12 @@ const registerSchema = z.object({
 });
 
 type RegisterFormValues = z.infer<typeof registerSchema>;
-
-/** Renders the register component. */
 export default function Register() {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [apiError, setApiError] = useState<string | null>(null);
     const [apiSuccess, setApiSuccess] = useState<string | null>(null);
   const navigate = useNavigate();
-
-  /** Renders the { register, handle submit, watch, form state: { errors, is valid, is submitting }, reset } component. */
     const { register, handleSubmit, watch, formState: { errors, isValid, isSubmitting }, reset } = useForm<RegisterFormValues>({ 
     mode: "onChange", 
     resolver: zodResolver(registerSchema),
@@ -52,9 +48,7 @@ export default function Register() {
       rePassword: ""
     }
   });
-
-
-    /** Manages on submit logic. */
+    // Handle user registration submission
     const onSubmit = async({name, username, email, gender, dateOfBirth, password, rePassword}: RegisterFormValues) => {
     const userData = {
       name: name,
@@ -68,8 +62,6 @@ export default function Register() {
     
     setApiError(null);
     setApiSuccess(null);
-    
-    /** Renders the {success,message} component. */
         const {success,message} = await createNewUser(userData);
 
     if (success) {

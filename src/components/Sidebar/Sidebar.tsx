@@ -1,7 +1,5 @@
 import { Newspaper, User, Bookmark, Users } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
-
-/** Renders the sidebar navigation component. */
 export default function Sidebar({ onItemClick, bare = false }: { onItemClick?: () => void; bare?: boolean }) {
   const location = useLocation();
     const navItems = [

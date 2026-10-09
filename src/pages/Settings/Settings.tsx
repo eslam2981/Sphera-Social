@@ -17,14 +17,9 @@ const passwordSchema = z.object({
 });
 
 type PasswordFormValues = z.infer<typeof passwordSchema>;
-
-/** Renders the settings component. */
 export default function Settings() {
-  /** Renders the {  data } component. */
     const { Data } = useContext(UserDataContext);
-  /** Renders the { is dark mode, toggle dark mode } component. */
     const { isDarkMode, toggleDarkMode } = useContext(ThemeContext);
-  /** Renders the { name, email } component. */
     const { name, email } = Data || { name: "User", email: "user@example.com" };
     const [activeTab, setActiveTab] = useState("account");
     const [showCurrentPassword, setShowCurrentPassword] = useState(false);
@@ -32,8 +27,6 @@ export default function Settings() {
     const [apiError, setApiError] = useState<string | null>(null);
     const [apiSuccess, setApiSuccess] = useState<string | null>(null);
   const navigate = useNavigate();
-
-  /** Renders the { register, handle submit, reset, watch, form state: { errors, is valid, is submitting } } component. */
     const { register, handleSubmit, reset, watch, formState: { errors, isValid, isSubmitting } } = useForm<PasswordFormValues>({
     mode: "onChange",
     resolver: zodResolver(passwordSchema),
@@ -45,8 +38,6 @@ export default function Settings() {
 
   const currentPasswordValue = watch("currentPassword");
   const newPasswordValue = watch("newPassword");
-
-  /** Manages on submit logic. */
     const onSubmit = async (data: PasswordFormValues) => {
     const userData = {
         password: data.currentPassword,
@@ -55,8 +46,6 @@ export default function Settings() {
     
     setApiError(null);
     setApiSuccess(null);
-    
-    /** Renders the { success, message} component. */
         const { success, message} = await changePassword(userData);
 
     if (success) {
@@ -85,7 +74,6 @@ export default function Settings() {
           <h1 className="text-2xl font-black text-slate-800 dark:text-white mb-6 px-2">Settings</h1>
           <div className="flex flex-col gap-2 pb-6 md:pb-0 px-2 md:px-0">
             {tabs.map((tab) => {
-              /** Renders the icon component. */
                 const Icon = tab.icon;
               const isActive = activeTab === tab.id;
               return (

@@ -2,13 +2,8 @@ import { AtSign, ArrowLeft } from "lucide-react";
 import spheraLogo from "../../../assets/sphera-mark.svg";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-
-/** Renders the forgot password component. */
 export default function ForgotPassword() {
-  /** Renders the { register, handle submit } component. */
     const { register, handleSubmit } = useForm<{ email: string }>();
-  
-  /** Manages on submit logic. */
     const onSubmit = (data: { email: string }) => {
     console.log("Forgot Password Request:", data);
   };

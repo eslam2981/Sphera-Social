@@ -2,12 +2,11 @@ import { createContext, useState, useEffect } from 'react';
 import type { User, UserContextType } from '../types';
 
 export const UserDataContext = createContext<UserContextType>({} as UserContextType);
-
-/** Manages auth context provider logic. */
 export default function AuthContextProvider({ children }:{children: React.ReactNode}) {
   const [Data, setUserData] = useState<User | null>(null);
 
   useEffect(() => {
+    // Fetch user data from API if token exists
     const fetchUserData = async () => {
       const token = localStorage.getItem("user_token");
       if (token && !Data) {
@@ -25,7 +24,7 @@ export default function AuthContextProvider({ children }:{children: React.ReactN
     fetchUserData();
   }, []);
 
-  /** Manages save user data logic. */
+  // Update user data in context state
   function saveUserData(data: User | null) {
     setUserData(data);
   }

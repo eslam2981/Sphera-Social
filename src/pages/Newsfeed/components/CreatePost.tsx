@@ -9,8 +9,6 @@ import { lazy, Suspense } from 'react';
 const EmojiPicker = lazy(() => import('emoji-picker-react'));
 import { ThemeContext } from "../../../contexts/ThemeContext";
 import { motion, AnimatePresence } from "framer-motion";
-
-/** Renders the create post component. */
 export default function CreatePost({ onPostCreated }: CreatePostProps) {
     const [content, setContent] = useState("");
     const [image, setImage] = useState<File | null>(null);
@@ -18,22 +16,16 @@ export default function CreatePost({ onPostCreated }: CreatePostProps) {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [errorMsg, setErrorMsg] = useState("");
     const [showEmojiPicker, setShowEmojiPicker] = useState(false);
-  
-  /** Manages on emoji click logic. */
     const onEmojiClick = (emojiObject: any) => {
     setContent(prev => prev + emojiObject.emoji);
   };
-  
-  /** Manages show error logic. */
     const showError = (msg: string) => {
     setErrorMsg(msg);
     setTimeout(() => setErrorMsg(""), 3000);
   };
   
   const fileInputRef = useRef<HTMLInputElement>(null);
-  /** Renders the {  data } component. */
     const { Data } = useContext(UserDataContext);
-  /** Renders the { is dark mode } component. */
     const { isDarkMode } = useContext(ThemeContext);
   
   const userName = Data?.name || "Unknown User";
@@ -47,8 +39,6 @@ export default function CreatePost({ onPostCreated }: CreatePostProps) {
       }
     };
   }, [imagePreview]);
-
-  /** Handles the image change action. */
     const handleImageChange = () => {
     const file = fileInputRef.current?.files?.[0];
     if (file) {
@@ -59,8 +49,6 @@ export default function CreatePost({ onPostCreated }: CreatePostProps) {
       setImagePreview(URL.createObjectURL(file));
     }
   };
-
-  /** Manages remove image logic. */
     const removeImage = () => {
     if (imagePreview) {
       URL.revokeObjectURL(imagePreview);
@@ -71,8 +59,6 @@ export default function CreatePost({ onPostCreated }: CreatePostProps) {
       fileInputRef.current.value = "";
     }
   };
-
-  /** Handles the submit action. */
     const handleSubmit = async () => {
     if (!content.trim() && !image) {
       showError("Please write something or add a photo to post.");

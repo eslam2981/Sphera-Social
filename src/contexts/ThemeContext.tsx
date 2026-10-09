@@ -6,8 +6,6 @@ export const ThemeContext = createContext<ThemeContextType>({
   isDarkMode: false,
   toggleDarkMode: () => {},
 });
-
-/** Manages theme context provider logic. */
 export default function ThemeContextProvider({ children }: { children: ReactNode }) {
   const [isDarkMode, setIsDarkMode] = useState(() => {
     if (typeof window !== "undefined") {
@@ -25,8 +23,6 @@ export default function ThemeContextProvider({ children }: { children: ReactNode
       localStorage.setItem("theme", "light");
     }
   }, [isDarkMode]);
-
-  /** Manages toggle dark mode logic. */
     const toggleDarkMode = () => setIsDarkMode((prev) => !prev);
 
   return (

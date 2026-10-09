@@ -1,7 +1,5 @@
 import { ThumbsUp, MessageCircle, Share2 } from "lucide-react";
 import type { PostCardActionsProps } from '../../../types';
-
-/** Renders the post card actions component. */
 export default function PostCardActions({ liked, onLike, onCommentToggle, onShare }: PostCardActionsProps) {
   return (
     <div className="flex items-center justify-between px-4 py-1">

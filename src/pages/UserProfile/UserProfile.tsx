@@ -8,34 +8,19 @@ import type { Post } from "../../types";
 import { formatTimeAgo } from "../../utils/dateUtils";
 import { SuccessMessage } from "../../components/Alerts/SuccessMessage";
 import { ErrorMessage } from "../../components/Alerts/ErrorMessage";
-
-/** Renders the user profile component. */
 export default function UserProfile() {
-  /** Renders the { id } component. */
     const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  /** Renders the {  data } component. */
     const { Data } = useContext(UserDataContext);
-  
-  /** Renders the [profile user, set profile user] component. */
     const [profileUser, setProfileUser] = useState<any>(null);
-  /** Renders the [user posts, set user posts] component. */
     const [userPosts, setUserPosts] = useState<Post[]>([]);
-  /** Renders the [is loading, set is loading] component. */
     const [isLoading, setIsLoading] = useState(true);
-  /** Renders the [img error, set img error] component. */
     const [imgError, setImgError] = useState(false);
-  /** Renders the [is following, set is following] component. */
     const [isFollowing, setIsFollowing] = useState(false);
-  /** Renders the [success msg, set success msg] component. */
     const [successMsg, setSuccessMsg] = useState("");
-  /** Renders the [error msg, set error msg] component. */
     const [errorMsg, setErrorMsg] = useState("");
-  
-  /** Renders the { name, email, username, cover, created at, followers count, following count, gender, date of birth, photo } component. */
     const { name, email, username, cover, createdAt, followersCount, followingCount, gender, dateOfBirth, photo } = profileUser || {};
-  
-  /** Manages format date logic. */
+    // Format date to a readable string
     const formatDate = (dateString: string | undefined) => {
     if (!dateString) return "";
     return new Date(dateString).toLocaleDateString('en-GB', {
@@ -47,7 +32,7 @@ export default function UserProfile() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    /** Fetches profile data data. */
+      // Fetch the viewed user profile data
       const fetchProfileData = async () => {
       if (!id) return;
       try {
@@ -93,7 +78,7 @@ export default function UserProfile() {
 
   
     const [isFollowLoading, setIsFollowLoading] = useState(false);
-  /** Handles the follow toggle action. */
+    // Toggle follow or unfollow user
     const handleFollowToggle = async () => {
     if (!id || isFollowLoading) return;
     const token = localStorage.getItem("user_token");

@@ -21,17 +21,12 @@ const loginSchema = z.object({
 });
 
 type LoginFormValues = z.infer<typeof loginSchema>;
-
-/** Renders the login component. */
 export default function Login() {
     const [showPassword, setShowPassword] = useState(false);
-  /** Renders the {save user data } component. */
     const {saveUserData } = useContext(UserDataContext);
     const [apiError, setApiError] = useState<string | null>(null);
     const [apiSuccess, setApiSuccess] = useState<string | null>(null);
   const navigate = useNavigate();
-
-  /** Renders the { register, handle submit, watch, reset, form state: { errors, is valid, is submitting } } component. */
     const { register, handleSubmit, watch, reset, formState: { errors, isValid, isSubmitting } } = useForm<LoginFormValues>({
     mode: "onChange",
     resolver: zodResolver(loginSchema),
@@ -41,8 +36,7 @@ export default function Login() {
     }
   });
   const passwordValue = watch("password");
-
-  /** Manages on submit logic. */
+    // Handle user login submission
     const onSubmit = async ({ email, password }: LoginFormValues) => {
     const userData = {
       email: email,
@@ -51,8 +45,6 @@ export default function Login() {
     
     setApiError(null);
     setApiSuccess(null);
-    
-    /** Renders the { success, message, token, user } component. */
         const { success, message, token, user } = await loginUser(userData);
     if (success) {
       setApiSuccess(message);

@@ -1,4 +1,3 @@
-/** Renders the post card skeleton component. */
 export default function PostCardSkeleton() {
   return (
     <div className="bg-white dark:bg-slate-900 rounded-xl shadow-[0_1px_3px_rgba(0,0,0,0.05)] border border-slate-200/60 dark:border-slate-800 mb-5 overflow-hidden">

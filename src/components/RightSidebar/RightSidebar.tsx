@@ -2,8 +2,6 @@ import { Search, Users, UserPlus, Loader2, Check } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { getSuggestedFriends, followUser, unfollowUser } from "../../services/Profile.service";
-
-/** Renders the right sidebar component. */
 export default function RightSidebar() {
   const [suggestedFriends, setSuggestedFriends] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -109,7 +107,7 @@ export default function RightSidebar() {
               <button 
                 onClick={() => handleFollowToggle(friend._id, friend.isFollowingLocal)}
                 disabled={processingId === friend._id}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-semibold text-[13px] transition-colors shrink-0 ml-2 ${
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-semibold text-[13px] transition-colors shrink-0 ml-2 cursor-pointer disabled:cursor-not-allowed ${
                   friend.isFollowingLocal 
                     ? 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
                     : 'bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 dark:hover:text-white'

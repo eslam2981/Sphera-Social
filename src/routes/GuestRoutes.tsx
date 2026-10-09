@@ -1,6 +1,4 @@
 import { Navigate, Outlet } from 'react-router-dom';
-
-/** Manages guest routes logic. */
 export default function GuestRoutes() {
   const token = localStorage.getItem("user_token");
   

@@ -1,6 +1,5 @@
 import { Users, MessageSquare, Globe, Heart, Shield } from "lucide-react";
 import spheraLogo from "../../assets/sphera-mark.svg";
-/** Renders the auth intro component. */
 export default function AuthIntro() {
   const stats = [
     { icon: Users, value: "1M+", label: "ACTIVE USERS" },
