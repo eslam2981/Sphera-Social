@@ -67,7 +67,7 @@ export default function Newsfeed() {
   
     // Update the local cache when a new post is created
     const handlePostCreated = (newPost: Post) => {
-    queryClient.setQueryData(['posts'], (oldData: any) => {
+    queryClient.setQueryData(['posts', activeFeed, currentUserId], (oldData: any) => {
       if (!oldData) return oldData;
       const newPages = [...oldData.pages];
       if (newPages.length > 0) {
@@ -81,7 +81,7 @@ export default function Newsfeed() {
   };
     // Update the local cache when a post is deleted
     const handlePostDeleted = (deletedPostId: string, isShare: boolean, sharedPostId?: string) => {
-    queryClient.setQueryData(['posts'], (oldData: any) => {
+    queryClient.setQueryData(['posts', activeFeed, currentUserId], (oldData: any) => {
       if (!oldData) return oldData;
       return {
         ...oldData,
@@ -99,7 +99,7 @@ export default function Newsfeed() {
   };
     // Update the local cache when a post is shared
     const handlePostShared = (sharedPost: Post, originalPostId: string, isShare: boolean, sourceSharedPostId?: string) => {
-    queryClient.setQueryData(['posts'], (oldData: any) => {
+    queryClient.setQueryData(['posts', activeFeed, currentUserId], (oldData: any) => {
       if (!oldData) return oldData;
       const newPages = oldData.pages.map((page: any, index: number) => {
         let updatedPosts = page.data.map((p: Post) => {
