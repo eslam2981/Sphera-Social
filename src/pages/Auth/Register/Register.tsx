@@ -113,7 +113,7 @@ export default function Register() {
           {errors.name && <span className="text-red-500 text-xs px-2">{errors.name.message}</span>}
         </div>
 
-        {}
+
         <div className="flex flex-col gap-1">
           <div className="relative group">
             <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
@@ -129,7 +129,7 @@ export default function Register() {
           {errors.username && <span className="text-red-500 text-xs px-2">{errors.username.message}</span>}
         </div>
 
-        {}
+
         <div className="flex flex-col gap-1">
           <div className="relative group">
             <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
@@ -145,7 +145,7 @@ export default function Register() {
           {errors.email && <span className="text-red-500 text-xs px-2">{errors.email.message}</span>}
         </div>
 
-        {}
+
         <div className="flex flex-col gap-1">
           <div className="flex items-center gap-3">
             <label className="flex-1 relative">

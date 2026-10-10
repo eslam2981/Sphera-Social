@@ -12,8 +12,10 @@ import PostCardStats from "./PostCardStats";
 import PostCardActions from "./PostCardActions";
 import { ErrorMessage } from "../../../components/Alerts/ErrorMessage";
 import type { PostCardProps } from '../../../types';
+import { useQueryClient } from "@tanstack/react-query";
 function PostCard({ postId, authorId, authorName, authorPhoto, timeAgo, content, imageUrl, likes, likesArray, comments, topComment, shares, onPostDeleted, onPostShared, isShare, reposterId, reposterName, reposterPhoto, reposterTimeAgo, reposterContent, priority }: PostCardProps) {
     const { Data } = useContext(UserDataContext);
+    const queryClient = useQueryClient();
     const [liked, setLiked] = useState(() => {
     if (Data && Data._id && likesArray) {
       return likesArray.includes(Data._id);
@@ -79,8 +81,11 @@ function PostCard({ postId, authorId, authorName, authorPhoto, timeAgo, content,
     try {
       const token = localStorage.getItem("user_token");
       await likePost(token, postId);
+      // Refresh global posts cache
+      queryClient.invalidateQueries({ queryKey: ['posts'] });
     } catch (error) {
       console.error("Error toggling like", error);
+      // Revert UI on error
       setLiked(!newLiked);
       if (!newLiked) {
         setLocalLikesCount(prev => prev + 1);
@@ -241,6 +246,9 @@ function PostCard({ postId, authorId, authorName, authorPhoto, timeAgo, content,
             // Fallback if total isn't returned
             setLocalCommentsCount((prev) => prev + 1);
           }
+          
+          // Refresh global posts cache
+          queryClient.invalidateQueries({ queryKey: ['posts'] });
         }
         setIsLoadingComments(false);
       }
@@ -258,6 +266,9 @@ function PostCard({ postId, authorId, authorName, authorPhoto, timeAgo, content,
       if (response.success) {
         setCommentsList((prev) => prev.filter((c) => c._id !== commentId));
         setLocalCommentsCount((prev) => Math.max(0, prev - 1));
+        
+        // Refresh global posts cache
+        queryClient.invalidateQueries({ queryKey: ['posts'] });
       } else {
         showError(response.message || "Failed to delete comment");
       }

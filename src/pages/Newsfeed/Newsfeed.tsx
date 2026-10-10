@@ -31,8 +31,8 @@ export default function Newsfeed() {
     refetch
   } = useInfiniteQuery({
     queryKey: ['posts', activeFeed, currentUserId],
-      staleTime: 60000,
-        queryFn: async ({ pageParam = 1 }) => {
+    staleTime: 0, // 0 ensures background refetch on every visit/focus
+    queryFn: async ({ pageParam = 1 }) => {
       if (activeFeed === "my-posts" && currentUserId) {
         return getUserPosts(token, currentUserId, 20, pageParam);
       }
@@ -67,8 +67,8 @@ export default function Newsfeed() {
   
     // Update the local cache when a new post is created
     const handlePostCreated = (newPost: Post) => {
-    queryClient.setQueryData(['posts', activeFeed, currentUserId], (oldData: any) => {
-      if (!oldData) return oldData;
+    queryClient.setQueriesData({ queryKey: ['posts'] }, (oldData: any) => {
+      if (!oldData || !oldData.pages) return oldData;
       const newPages = [...oldData.pages];
       if (newPages.length > 0) {
         newPages[0] = {
@@ -81,8 +81,8 @@ export default function Newsfeed() {
   };
     // Update the local cache when a post is deleted
     const handlePostDeleted = (deletedPostId: string, isShare: boolean, sharedPostId?: string) => {
-    queryClient.setQueryData(['posts', activeFeed, currentUserId], (oldData: any) => {
-      if (!oldData) return oldData;
+    queryClient.setQueriesData({ queryKey: ['posts'] }, (oldData: any) => {
+      if (!oldData || !oldData.pages) return oldData;
       return {
         ...oldData,
         pages: oldData.pages.map((page: any) => ({
@@ -99,8 +99,8 @@ export default function Newsfeed() {
   };
     // Update the local cache when a post is shared
     const handlePostShared = (sharedPost: Post, originalPostId: string, isShare: boolean, sourceSharedPostId?: string) => {
-    queryClient.setQueryData(['posts', activeFeed, currentUserId], (oldData: any) => {
-      if (!oldData) return oldData;
+    queryClient.setQueriesData({ queryKey: ['posts'] }, (oldData: any) => {
+      if (!oldData || !oldData.pages) return oldData;
       const newPages = oldData.pages.map((page: any, index: number) => {
         let updatedPosts = page.data.map((p: Post) => {
           if (p._id === originalPostId || (isShare && sourceSharedPostId && p._id === sourceSharedPostId)) {
