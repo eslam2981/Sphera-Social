@@ -1,32 +1,27 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Users, Search, UserPlus, Check, Loader2 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getSuggestedFriends, followUser, unfollowUser } from "../../services/Profile.service";
 
 export default function Friends() {
-  const [friends, setFriends] = useState<any[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const queryClient = useQueryClient();
   const [processingId, setProcessingId] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
 
-  useEffect(() => {
-    const fetchFriends = async () => {
-      try {
-        const token = localStorage.getItem("user_token");
-        // For the friends page we might want more suggestions
-        const response = await getSuggestedFriends(token, 50);
-        if (response.success && Array.isArray(response.data)) {
-          const friendsWithState = response.data.map(f => ({ ...f, isFollowingLocal: false }));
-          setFriends(friendsWithState);
-        }
-      } catch (error) {
-        console.error("Error fetching friends:", error);
-      } finally {
-        setIsLoading(false);
+  const token = localStorage.getItem("user_token");
+
+  const { data: friends = [], isLoading } = useQuery({
+    queryKey: ['suggestedFriends', 'page'],
+    queryFn: async () => {
+      const response = await getSuggestedFriends(token, 50);
+      if (response.success && Array.isArray(response.data)) {
+        return response.data.map((f: any) => ({ ...f, isFollowingLocal: false }));
       }
-    };
-    fetchFriends();
-  }, []);
+      return [];
+    },
+    staleTime: 5 * 60 * 1000,
+  });
 
   const handleFollowToggle = async (userId: string, isFollowing: boolean) => {
     if (processingId) return;
@@ -44,13 +39,14 @@ export default function Friends() {
       }
 
       if (success) {
-        setFriends(prev => 
-          prev.map(friend => 
+        queryClient.setQueryData(['suggestedFriends', 'page'], (oldData: any[]) => {
+          if (!oldData) return [];
+          return oldData.map(friend => 
             friend._id === userId 
               ? { ...friend, isFollowingLocal: !isFollowing }
               : friend
-          )
-        );
+          );
+        });
       }
     } catch (error) {
       console.error("Error toggling follow:", error);

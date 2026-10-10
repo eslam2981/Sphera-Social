@@ -262,7 +262,8 @@ export async function followUser(token: string | null, userId: string) {
     };   
 }
 export async function unfollowUser(token: string | null, userId: string) {
-    const { data } = await axios.delete(`${base}/users/${userId}/unfollow`, 
+    const { data } = await axios.put(`${base}/users/${userId}/follow`, 
+        {},
         {
             headers: {
                 token: token

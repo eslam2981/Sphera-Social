@@ -5,6 +5,8 @@ import { uploadProfilePhoto, getUserProfile, getUserPosts } from "../../services
 import PostCard from "../Newsfeed/components/PostCard";
 import type { Post } from "../../types";
 import { formatTimeAgo } from "../../utils/dateUtils";
+import ProfileSkeleton from "./components/ProfileSkeleton";
+import PostCardSkeleton from "../Newsfeed/components/PostCardSkeleton";
 export default function Profile() {
     const { Data, saveUserData } = useContext(UserDataContext);
     const [userPosts, setUserPosts] = useState<Post[]>([]);
@@ -90,6 +92,16 @@ export default function Profile() {
 
   return (
     <div className="w-full mx-auto animate-fade-in-up">
+      {isLoading && !Data?._id ? (
+        <div className="mb-4">
+          <ProfileSkeleton />
+          <div className="px-4 sm:px-8 mt-6 space-y-4">
+            <PostCardSkeleton />
+            <PostCardSkeleton />
+          </div>
+        </div>
+      ) : (
+        <>
       {}
       <input 
         type="file" 
@@ -207,8 +219,9 @@ export default function Profile() {
 
         {}
         {isLoading ? (
-          <div className="py-16 flex items-center justify-center">
-            <Loader2 className="w-8 h-8 animate-spin text-indigo-500" />
+          <div className="space-y-6">
+            <PostCardSkeleton />
+            <PostCardSkeleton />
           </div>
         ) : userPosts.length > 0 ? (
           <div className="space-y-6">
@@ -248,7 +261,8 @@ export default function Profile() {
           </div>
         )}
       </div>
-
+      </>
+      )}
     </div>
   )
 }

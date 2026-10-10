@@ -30,7 +30,8 @@ export default function Newsfeed() {
     error,
     refetch
   } = useInfiniteQuery({
-    queryKey: ['posts', activeFeed, currentUserId],
+    queryKey: activeFeed === 'my-posts' ? ['posts', activeFeed, currentUserId] : ['posts', activeFeed],
+    enabled: activeFeed === 'my-posts' ? !!currentUserId : true,
     staleTime: 0, // 0 ensures background refetch on every visit/focus
     queryFn: async ({ pageParam = 1 }) => {
       if (activeFeed === "my-posts" && currentUserId) {

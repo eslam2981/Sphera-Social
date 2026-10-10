@@ -2,12 +2,14 @@ import { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { UserDataContext } from "../../contexts/UserData";
 import { Calendar, Mail, Loader2, User, Users, Cake, ArrowLeft, UserPlus, UserMinus } from "lucide-react";
-import { getUserProfileById, getUserPosts, followUser } from "../../services/Profile.service";
+import { getUserProfileById, getUserPosts, followUser, unfollowUser } from "../../services/Profile.service";
 import PostCard from "../Newsfeed/components/PostCard";
 import type { Post } from "../../types";
 import { formatTimeAgo } from "../../utils/dateUtils";
 import { SuccessMessage } from "../../components/Alerts/SuccessMessage";
 import { ErrorMessage } from "../../components/Alerts/ErrorMessage";
+import ProfileSkeleton from "../Profile/components/ProfileSkeleton";
+import PostCardSkeleton from "../Newsfeed/components/PostCardSkeleton";
 export default function UserProfile() {
     const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
@@ -90,11 +92,11 @@ export default function UserProfile() {
       setSuccessMsg("");
       if (isFollowing) {
         // Unfollows the user and decrements the followers count
-        const res = await followUser(token, id);
+        const res = await unfollowUser(token, id);
         if (res.success) {
           setIsFollowing(false);
           setProfileUser((prev: any) => prev ? { ...prev, followersCount: Math.max(0, (prev.followersCount || 0) - 1) } : prev);
-          setSuccessMsg("Unfollowed user successfully.");
+          setSuccessMsg(`Unfollowed ${name || "user"} successfully.`);
           setTimeout(() => setSuccessMsg(""), 3000);
         } else {
           setErrorMsg("Failed to unfollow user");
@@ -106,7 +108,7 @@ export default function UserProfile() {
         if (res.success) {
           setIsFollowing(true);
           setProfileUser((prev: any) => prev ? { ...prev, followersCount: (prev.followersCount || 0) + 1 } : prev);
-          setSuccessMsg("started following you.");
+          setSuccessMsg(`Started following ${name || "user"}.`);
           setTimeout(() => setSuccessMsg(""), 3000);
         } else {
           setErrorMsg("Failed to follow user");
@@ -126,6 +128,17 @@ export default function UserProfile() {
     <div className="w-full mx-auto animate-fade-in-up">
       <SuccessMessage message={successMsg} />
       <ErrorMessage message={errorMsg} />
+      
+      {isLoading && !profileUser ? (
+        <div className="mb-4">
+          <ProfileSkeleton />
+          <div className="px-4 sm:px-8 mt-6 space-y-4">
+            <PostCardSkeleton />
+            <PostCardSkeleton />
+          </div>
+        </div>
+      ) : (
+        <>
       {}
       <div className="py-3 px-2 flex items-center">
         <button 
@@ -224,7 +237,7 @@ export default function UserProfile() {
             {["Posts", "Replies", "Media", "Likes"].map((tab, idx) => (
               <button 
                 key={tab}
-                className={`cursor-default pb-4 text-sm font-bold transition-colors relative whitespace-nowrap ${idx === 0 ? "text-indigo-600 dark:text-indigo-400" : "text-slate-500 dark:text-gray-400"}`}
+                className={`cursor-pointer pb-4 text-sm font-bold transition-colors relative whitespace-nowrap ${idx === 0 ? "text-indigo-600 dark:text-indigo-400" : "text-slate-500 dark:text-gray-400"}`}
               >
                 {tab}
                 {idx === 0 && (
@@ -237,8 +250,9 @@ export default function UserProfile() {
 
         {}
         {isLoading ? (
-          <div className="py-16 flex items-center justify-center">
-            <Loader2 className="w-8 h-8 animate-spin text-indigo-500" />
+          <div className="space-y-6">
+            <PostCardSkeleton />
+            <PostCardSkeleton />
           </div>
         ) : userPosts.length > 0 ? (
           <div className="space-y-6">
@@ -278,7 +292,8 @@ export default function UserProfile() {
           </div>
         )}
       </div>
-
+      </>
+      )}
     </div>
   )
 }

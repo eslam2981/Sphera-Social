@@ -1,35 +1,26 @@
 import { Search, Users, UserPlus, Loader2, Check } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getSuggestedFriends, followUser, unfollowUser } from "../../services/Profile.service";
 export default function RightSidebar() {
-  const [suggestedFriends, setSuggestedFriends] = useState<any[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const queryClient = useQueryClient();
   const [processingId, setProcessingId] = useState<string | null>(null);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchSuggestions = async () => {
-      try {
-        const token = localStorage.getItem("user_token");
-        const response = await getSuggestedFriends(token, 5);
-        console.log("RightSidebar fetch response:", response);
-        if (response.success && Array.isArray(response.data)) {
-          // Add a local isFollowing state
-          const friendsWithState = response.data.map(f => ({ ...f, isFollowingLocal: false }));
-          console.log("Setting state with:", friendsWithState);
-          setSuggestedFriends(friendsWithState);
-        } else {
-          console.error("RightSidebar: Failed to parse array or success is false", response);
-        }
-      } catch (error) {
-        console.error("Error fetching suggestions:", error);
-      } finally {
-        setIsLoading(false);
+  const token = localStorage.getItem("user_token");
+
+  const { data: suggestedFriends = [], isLoading } = useQuery({
+    queryKey: ['suggestedFriends', 'sidebar'],
+    queryFn: async () => {
+      const response = await getSuggestedFriends(token, 5);
+      if (response.success && Array.isArray(response.data)) {
+        return response.data.map((f: any) => ({ ...f, isFollowingLocal: false }));
       }
-    };
-    fetchSuggestions();
-  }, []);
+      return [];
+    },
+    staleTime: 5 * 60 * 1000,
+  });
 
   const handleFollowToggle = async (userId: string, isFollowing: boolean) => {
     if (processingId) return;
@@ -48,13 +39,14 @@ export default function RightSidebar() {
       }
 
       if (success) {
-        setSuggestedFriends(prev => 
-          prev.map(friend => 
+        queryClient.setQueryData(['suggestedFriends', 'sidebar'], (oldData: any[]) => {
+          if (!oldData) return [];
+          return oldData.map(friend => 
             friend._id === userId 
               ? { ...friend, isFollowingLocal: !isFollowing }
               : friend
-          )
-        );
+          );
+        });
       }
     } catch (error) {
       console.error("Error toggling follow:", error);
@@ -88,7 +80,18 @@ export default function RightSidebar() {
 
       <div className="flex flex-col gap-3">
         {isLoading ? (
-          <div className="flex justify-center py-4"><Loader2 className="animate-spin text-slate-400" /></div>
+          Array.from({ length: 5 }).map((_, i) => (
+            <div key={i} className="flex items-center justify-between p-3 rounded-xl border border-slate-100 dark:border-slate-700/60 animate-pulse">
+              <div className="flex items-center gap-3 overflow-hidden flex-1">
+                <div className="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-800 shrink-0" />
+                <div className="flex flex-col gap-2 flex-1">
+                  <div className="h-3.5 bg-slate-200 dark:bg-slate-800 rounded w-24" />
+                  <div className="h-2.5 bg-slate-200 dark:bg-slate-800 rounded w-16" />
+                </div>
+              </div>
+              <div className="w-20 h-8 rounded-lg bg-slate-200 dark:bg-slate-800 shrink-0 ml-2" />
+            </div>
+          ))
         ) : suggestedFriends.length > 0 ? (
           suggestedFriends.map((friend) => (
             <div key={friend._id} className="flex items-center justify-between p-3 rounded-xl border border-slate-100 dark:border-slate-700/60 hover:border-slate-200 dark:hover:border-slate-700 hover:shadow-sm transition-all group">
