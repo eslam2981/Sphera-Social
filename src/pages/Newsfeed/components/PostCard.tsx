@@ -49,6 +49,7 @@ function PostCard({ postId, authorId, authorName, authorPhoto, timeAgo, content,
     const [editImagePreview, setEditImagePreview] = useState<string | null>(imageUrl || null);
     const [isUpdatingPost, setIsUpdatingPost] = useState(false);
   const editFileInputRef = useRef<HTMLInputElement>(null);
+  const isLikePending = useRef(false);
     const [localContent, setLocalContent] = useState(content);
     const [isSharing, setIsSharing] = useState(false);
     const [isShareModalOpen, setIsShareModalOpen] = useState(false);
@@ -58,7 +59,11 @@ function PostCard({ postId, authorId, authorName, authorPhoto, timeAgo, content,
     setErrorMsg(msg);
     setTimeout(() => setErrorMsg(""), 3000);
   };
-    const handleLikeClick = async () => {
+  const handleLikeClick = async () => {
+    // Prevent overlapping requests 
+    if (isLikePending.current) return;
+    isLikePending.current = true;
+
     const newLiked = !liked;
     setLiked(newLiked);
     if (newLiked) {
@@ -72,7 +77,7 @@ function PostCard({ postId, authorId, authorName, authorPhoto, timeAgo, content,
       await likePost(token, postId);
       queryClient.invalidateQueries({ queryKey: ['posts'] });
     } catch (_error) {
-      
+      // Rollback optimistic update on failure
       showError("Failed to update like. Please try again.");
       setLiked(!newLiked);
       if (!newLiked) {
@@ -80,6 +85,8 @@ function PostCard({ postId, authorId, authorName, authorPhoto, timeAgo, content,
       } else {
         setLocalLikesCount(prev => prev - 1);
       }
+    } finally {
+      isLikePending.current = false;
     }
   };
     const handleShareClick = () => {
